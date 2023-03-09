@@ -31,6 +31,7 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
+// Routes
 app.get('/', function(req, res) {
 	if (req.session.user)	{
 		res.render("home", {
@@ -43,6 +44,9 @@ app.get('/', function(req, res) {
 	}	
 });
 
+app.get("/login", function(req, res)	{
+	res.render("login");
+});
 
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
