@@ -1,0 +1,15 @@
+{{#if error}}
+  <p>{{error}}</p>
+{{/if}}
+
+<form method = "POST" action = "/login">
+  <hr>
+  <label for="username">Username</label>
+  <input name = "username" type = "text" id = "username" >
+  <br>
+  <label for="password">Password</label>
+  <input name = "password" type = "password" id = "password" >
+  <br>
+  <hr>
+  <input type = "submit" value = "Sign In"> <!--<button type="submit">Sign Up</button> -->
+</form>

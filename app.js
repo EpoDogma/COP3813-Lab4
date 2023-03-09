@@ -1,8 +1,27 @@
 const express = require('express');
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const COOKIE_SECRET = require("cookieSecret.js");
 
 let app = express();
 
-// set up handlebars view engine
+// Set up the bodyParser to handle urlencoded data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Set up cookie-parser
+app.use(cookieParser(COOKIE_SECRET));
+
+// Set up session for user based on cookie
+app.use(session({
+	secret: COOKIE_SECRET,
+	resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+// Set up handlebars view engine
 let handlebars = require('express-handlebars')
 	.create({ defaultLayout:'main' });
 app.engine('handlebars', handlebars.engine);
@@ -12,11 +31,19 @@ app.set('port', process.env.PORT || 3000);
 
 app.use(express.static(__dirname + '/public'));
 
-
 app.get('/', function(req, res) {
-
-	res.render('home'); 
+	if (req.session.user)	{
+		res.render("home", {
+			user: req.session.user
+		});
+	}	else	{
+		res.render("login", {
+			error: "You need to login"
+		}); 
+	}	
 });
+
+
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
 	res.status(404);
