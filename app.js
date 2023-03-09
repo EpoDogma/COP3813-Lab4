@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const COOKIE_SECRET = require("cookieSecret.js");
+const COOKIE_SECRET = require("./cookieSecret.js");
 
 let app = express();
 
